@@ -8,6 +8,7 @@ import (
 
 func main() {
 	myApp := app.New()
+	myApp.Settings().SetTheme(ui.NewCustomTheme()) // 重新启用主题
 	window := myApp.NewWindow("AIgent Translator")
 
 	// 创建UI

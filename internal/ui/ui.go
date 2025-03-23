@@ -35,6 +35,14 @@ func (t *TranslatorUI) createUI() {
 	t.output = widget.NewMultiLineEntry()
 	t.output.SetPlaceHolder("翻译结果将显示在这里...")
 	t.output.Disable()
+	// for test
+	t.output.SetText("test")
+	t.output.Wrapping = fyne.TextWrapWord
+	t.output.TextStyle = fyne.TextStyle{
+		Monospace: true,
+		Bold:      true, // 加粗字体
+	}
+	outputContainer := container.NewGridWrap(fyne.NewSize(500, 200), t.output)
 
 	// 创建语言选择下拉框
 	languages := []string{"中文", "英语", "日语", "韩语", "法语", "德语"}
@@ -61,7 +69,7 @@ func (t *TranslatorUI) createUI() {
 		langContainer,
 		t.input,
 		t.translateBtn,
-		t.output,
+		outputContainer,
 	)
 
 	// 设置窗口内容和大小
@@ -75,15 +83,14 @@ func (t *TranslatorUI) handleTranslate() {
 	from := t.fromLang.Selected
 	to := t.toLang.Selected
 
-	// TODO: 调用翻译服务
 	translated := t.translate(text, from, to)
 	t.output.SetText(translated)
 }
 
 // translate 调用翻译服务
 func (t *TranslatorUI) translate(text, from, to string) string {
-	// TODO: 实现实际的翻译逻辑
-	apiKey := "your_api_key_here"
+
+	apiKey := "sk-sbscazwmhwgqdshepehxtrfwwoavvfmxfskspscjuwwzjowr"
 	translator := translator.NewTranslator(apiKey)
 	translated, err := translator.Translate(text, from, to)
 	if err != nil {
