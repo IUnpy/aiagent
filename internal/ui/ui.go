@@ -81,14 +81,11 @@ func (t *TranslatorUI) handleTranslate() {
 	}
 
 	// 添加用户输入到聊天记录
-	wrappedInput := ChineseWrap(text, 20) // 用户输入每行20字
-	inputLabel := widget.NewLabel(wrappedInput)
-	inputLabel.Wrapping = fyne.TextWrapOff // 关闭自动换行，使用我们的换行
-
-	userCard := container.NewPadded(inputLabel)
-	userBox := container.NewHBox(
-		layout.NewSpacer(),
-		userCard,
+	inputLabel := widget.NewLabel(text)
+	inputLabel.Wrapping = fyne.TextWrapWord
+	inputLabel.Alignment = fyne.TextAlignTrailing
+	userBox := container.NewVBox(
+		inputLabel,
 	)
 	t.chatContainer.Add(userBox)
 
@@ -96,14 +93,11 @@ func (t *TranslatorUI) handleTranslate() {
 	translated := t.translate(text, t.fromLang.Selected, t.toLang.Selected)
 
 	// 添加翻译结果到聊天记录
-	wrappedOutput := ChineseWrap(translated, 25) // 翻译结果每行25字
-	outputLabel := widget.NewLabel(wrappedOutput)
-	outputLabel.Wrapping = fyne.TextWrapOff
-
-	botCard := container.NewPadded(outputLabel)
-	botBox := container.NewHBox(
-		botCard,
-		layout.NewSpacer(),
+	outputLabel := widget.NewLabel(translated)
+	outputLabel.Wrapping = fyne.TextWrapWord
+	outputLabel.Alignment = fyne.TextAlignLeading
+	botBox := container.NewVBox(
+		outputLabel,
 	)
 	t.chatContainer.Add(botBox)
 
